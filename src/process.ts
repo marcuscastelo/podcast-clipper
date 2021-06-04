@@ -6,7 +6,7 @@ export default class Process {
     private nativeProcess?: ChildProcessWithoutNullStreams
 
     private accumOutput: { err: boolean, data: Buffer }[];
-    public stdinPrintFunction: Function = (text: string) => null;
+    public stdoutPrintFunction: Function = (text: string) => null;
     public stderrPrintFunction: Function = (text: string) => null;
 
     private running: boolean = false;
@@ -18,14 +18,17 @@ export default class Process {
     public spawn() {
         this.running = true;
         this.nativeProcess = child_process.spawn(this.command, this.args);
-
-        this.nativeProcess.stdout.on('data', this.stdinForward.bind(this));
+        this.nativeProcess.stdout.on('data', this.stdoutForward.bind(this));
         this.nativeProcess.stderr.on('data', this.sterrForward.bind(this));
 
         this.nativeProcess.on('close', () => {
             this.running = false;
             this.nativeProcess = undefined;
         });
+    }
+
+    public getCompleteCMD() {
+        return `[${this.command} ${this.args?.reduce((a,b) => `${a} ${b}`)}]` 
     }
 
     public async join() {
@@ -50,9 +53,9 @@ export default class Process {
         else return {converted: false, data: filtered.map(out => out.data)};
     }
 
-    private stdinForward(data: Buffer) {
+    private stdoutForward(data: Buffer) {
         this.accumOutput.push({ err: false, data });
-        this.stdinPrintFunction(data.toString());
+        this.stdoutPrintFunction(data.toString());
     }
 
     private sterrForward(data: Buffer) {
