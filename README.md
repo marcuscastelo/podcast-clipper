@@ -1,1 +1,1 @@
-# podcast-clipper
+# Stupify
