@@ -24,7 +24,7 @@
   "homepage": "https://github.com/marcuscastelo/podcast-clipper#readme",
   "devDependencies": {
     "@types/ffmpeg": "^1.0.4",
-    "@types/node": "^15.6.1",
+    "@types/node": "^18.0.3",
     "@types/spotify-web-api-node": "^5.0.7",
     "nodemon": "^2.0.7",
     "rimraf": "^3.0.2",
