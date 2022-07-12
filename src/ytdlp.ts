@@ -102,6 +102,94 @@ interface DownloadOptions {
     downloaderArgs: string;  // --downloader-args NAME:ARGS
 }
 
+interface FileSystemOptions {
+    batchFile: string | null;  // -a --batch-file FILE | --no-batch-file
+    paths: string;  // -P, --paths [TYPES:]PATH
+    output: string;  // -o, --output [TYPES:]TEMPLATE
+    outputNAPlaceholder: string;  // --output-na-placeholder TEXT
+    restrictFileNames: boolean;  // --restrict-filenames | --no-restrict-filenames
+    windowsFileNames: boolean;  // --windows-filenames | --no-windows-filenames
+    trimFilenames: number;  // --trim-filenames LENGTH
+    noOverwrites: boolean;  // --no-overwrites
+    forceOverwrites: boolean;  // --force-overwrites | --no-force-overwrites
+    continue: boolean;  // --continue | --no-continue
+    part: boolean;  // --part | --no-part
+    mTime: boolean;  // --mtime | --no-mtime
+    writeDescription: boolean;  // --write-description | --no-write-description
+    writeInfoJson: boolean;  // --write-info-json | --no-write-info-json
+    writePlaylistMetafiles: boolean;  // --write-playlist-metafiles | --no-write-playlist-metafiles
+    cleanInfoJson: boolean;  // --clean-info-json | --no-clean-info-json
+    writeComments: boolean;  // --write-comments | --no-write-comments
+    loadInfoJson?: string;  // --load-info-json FILE
+    cookies: string | false;  // --cookies FILE | --no-cookies
+    cookiesFromBrowser: string | false; // --cookies-from-browser BROWSER[+KEYRING][:PROFILE] | --no-cookies-from-browser
+    cacheDir: string | false;  // --cache-dir DIR | --no-cache-dir
+    rmCacheDir?: true;  // --rm-cache-dir
+}
+
+interface ThumbnailOptions {
+    writeThumbnails: boolean;  // --write-thumbnails | --no-write-thumbnails
+    writeAllThumbnails?: true;  // --write-all-thumbnails
+    listThumbnails?: true;  // --list-thumbnails
+}
+
+interface InternetShortcutOptions {
+    writeLink?: true;  // --write-link
+    writeUrlLink?: true;  // --write-url-link
+    writeWeblocLink?: true;  // --write-webloc-link
+    writeDestktopLink?: true;  // --write-desktop-link
+}
+
+interface VerbosityAndSimulationOptions {
+    quiet?: true;  // -q, --quiet
+    noWarnings?: true;  // --no-warnings
+    simulate?: boolean;  // -s, --simulate | --no-simulate
+    ignoreNoFormatError?: boolean;  // --ignore-no-format-error | --no-ignore-no-format-error
+    skipDownload?: true;  // --skip-download
+    print?: string; // --print [WHEN:]TEMPLATE
+    printToFile?: string; // --print-to-file [WHEN:]TEMPLATE FILE
+    dumpJson?: true; // -j, --dump-json
+    dumpSingleJson?: true; // -J, --dump-single-json
+    forceWriteArchive?: true; // --force-write-archive
+    newline?: true; // --newline
+    progress?: boolean; // --progress | --no-progress
+    consoleTitle?: true; // --console-title
+    progressTemplate?: string; // --progress-template [TYPES:]TEMPLATE
+    verbose?: true; // -v, --verbose
+    dumpPages?: true; // --dump-pages
+    writePages?: true; // --write-pages
+    printTraffic?: true; // --print-traffic
+}
+
+interface WorkaroundOptions {
+    encoding?: string;  // --encoding ENCODING
+    legacyServerConnect?: true;  // --legacy-server-connect
+    noCheckCertificate?: true;  // --no-check-certificate
+    preferInsecure?: true;  // --prefer-insecure
+    addHeader?: string;  // --add-header FIELD:VALUE
+    bidiWorkaround?: true;  // --bidi-workaround
+    sleepRequests?: number;  // --sleep-requests SECONDS
+    sleepInterval?: number;  // --sleep-interval SECONDS
+    maxSleepInterval?: number;  // --max-sleep-interval SECONDS
+    sleepSubtitles?: string;  // --sleep-subtitles SECONDS
+}
+
+interface VideoFormatOptions {
+    format?: string;  // -f, --format FORMAT
+    formatSort?: string; // -S, --format-sort SORTORDER
+    formatSortForce?: boolean; // --format-sort-force | --no-format-sort-force
+    videoMultistreams?: boolean; // --video-multistreams | --no-video-multistreams
+    audioMultistreams?: boolean; // --audio-multistreams | --no-audio-multistreams
+    preferFreeFormats?: boolean; // --prefer-free-formats | --no-prefer-free-formats
+    checkFormats?: boolean; // --check-formats | --no-check-formats
+    checkAllFormats?: true; // --check-all-formats
+    listFormats?: true; // --list-formats
+    mergeOutputFormat?: string; // --merge-output-format FORMAT
+}
+
+
+
+    
 export async function download(urls: string | string[], options: Options) {
 
 }
