@@ -2,6 +2,7 @@ import assert from 'assert';
 import chalk from 'chalk';
 import SpotifyWebApi from 'spotify-web-api-node';
 import credentials from './credentials.json';
+import { SpotifyPlaylist, SpotifyTrack } from './generic-playlist';
 
 export async function testSpotify() {
     // console.log(credentials);
@@ -26,6 +27,12 @@ export async function testSpotify() {
     spotifyApi.getPlaylist(playlistId);
 
     const playlist = await spotifyApi.getPlaylist(playlistId);
+
+    if (playlist.body.type !== 'playlist') {
+        console.error(chalk.red(`Playlist is not a playlist, it is: ${playlist.body.type}`));
+        throw new Error('Invalid playlist type');
+    }
+
     console.log(chalk.green(`Playlist ${playlist.body.name} has ${playlist.body.tracks.total} tracks`));
 
     // console.log(playlist);
@@ -35,7 +42,7 @@ export async function testSpotify() {
     let totalTracks = playlist.body.tracks.total;
     let limit = playlist.body.tracks.limit;
 
-    let tracks: any[] = [];
+    let tracks: SpotifyTrack[] = [];
 
     const numberOfPages = Math.ceil(totalTracks / limit) || 1;
     while (currentTrackPageNumber <= numberOfPages) {
@@ -48,7 +55,46 @@ export async function testSpotify() {
 
         console.log(chalk.green(`Page ${currentTrackPageNumber}/${numberOfPages}`));
 
-        tracks = tracks.concat(currentTracksPage.body.items);
+        const tracksPage: SpotifyTrack[] = currentTracksPage.body.items.map(track => {
+            let song = track.track;
+            if (!song) {
+                throw new Error('Invalid track');
+            }
+            return {
+                id: song.id,
+                name: song.name,
+                artists: song.artists.map(artist => ({
+                    id: artist.id,
+                    name: artist.name,
+                    href: artist.href,
+                })),
+                album: {
+                    albumType: song.album.album_type,
+                    artists: song.album.artists.map(artist => ({
+                        id: artist.id,
+                        name: artist.name,
+                        href: artist.href,
+                    })),
+                    href: song.album.href,
+                    id: song.album.id,
+                    name: song.album.name,
+                    releaseDate: song.album.release_date,
+                    releaseDatePrecision: song.album.release_date_precision,
+                    totalTracks: song.album.total_tracks,
+                    type: song.album.type,
+                },
+                durationMs: song.duration_ms,
+                href: song.href,
+                explicit: song.explicit,
+                episode: (<any>song).episode,
+                popularity: song.popularity,
+                track: true,
+                type: song.type,
+            };
+        });
+
+
+        tracks = tracks.concat(tracksPage);
 
         currentTrackPageNumber++;
         if (currentTracksPage.body.next) {
@@ -59,5 +105,18 @@ export async function testSpotify() {
         }
     }
 
+    let RAMPlaylist: SpotifyPlaylist = {
+        name: playlist.body.name,
+        id: playlist.body.id,
+        href: playlist.body.href,
+        collaborative: playlist.body.collaborative,
+        tracks: tracks,
+    }
+
+
     console.log(chalk.green(`Found ${tracks.length} tracks`));
+    //Print first track
+    // console.dir(RAMPlaylist);
+    //Print as json with indentation
+    console.log(JSON.stringify(RAMPlaylist, null, 2));
 }
