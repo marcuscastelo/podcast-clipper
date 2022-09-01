@@ -3,9 +3,11 @@ import { listPlaylistTracksAsQueries } from './spotify-test';
 
 import { program } from 'commander';
 import { authenticateSpotify } from './spotify/spotify-api';
-program.option('-s, --spotify', 'Test Spotify API');
-program.option('-y, --youtube', 'Test YouTube API');
-program.option('-d, --download', 'Download YouTube videos');
+
+// Define command line options
+program.option('-s, --spotify', 'List songs from Spotify and download them via Youtube');
+program.option('-y, --youtube', 'List songs directly from YouTube API, and download them');
+// program.option('-d, --download', 'Download YouTube videos');
 
 program.parse();
 
@@ -30,9 +32,10 @@ async function main() {
     } else if (opts.youtube) {
         console.log(chalk.red('Not implemented'));
         throw new Error('Not implemented - Vai la vinão');
-    } else if (opts.download) {
-        console.log(chalk.red('Not implemented'));
-        throw new Error('Not implemented');
+    // } else if (opts.download) { // TODO: define scope
+    //     console.log(chalk.red('Not implemented'));
+    //     throw new Error('Not implemented');
+    // }
     } else {
         console.log(chalk.red('No option set'));
         process.exit(1);
