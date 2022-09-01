@@ -109,3 +109,5 @@ build/
 videos/
 
 credentials.json
+bin/
+*.mp3

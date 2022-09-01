@@ -4,7 +4,7 @@
   "description": "Clips youtube podcasts",
   "main": "index.js",
   "scripts": {
-    "dev": "nodemon -- -s",
+    "dev": "nodemon -- -d",
     "build": "rimraf ./build && tsc",
     "start": "npm run build && node build/index.js"
   },
@@ -36,7 +36,9 @@
     "commander": "^9.3.0",
     "dotenv": "^16.0.1",
     "ffmpeg": "^0.0.4",
+    "fs": "^0.0.1-security",
     "spotify-web-api-node": "^5.0.2",
-    "utility-types": "^3.10.0"
+    "utility-types": "^3.10.0",
+    "yt-dlp-wrap": "^2.3.11"
   }
 }
