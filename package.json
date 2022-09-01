@@ -4,7 +4,7 @@
   "description": "Clips youtube podcasts",
   "main": "index.js",
   "scripts": {
-    "dev": "nodemon",
+    "dev": "nodemon -- -s",
     "build": "rimraf ./build && tsc",
     "start": "npm run build && node build/index.js"
   },
