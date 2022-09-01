@@ -1,6 +1,6 @@
-import assert from 'assert';
 import chalk from 'chalk';
 import { isErr } from './common/result';
+import { SpotifyTrack } from './generic-playlist';
 import { getFullPlaylist, getPlaylistId } from './spotify/playlist-utils';
 
 import { spotifyApi } from './spotify/spotify-api';
@@ -25,5 +25,13 @@ export async function testSpotify() {
 
     console.log(chalk.green(`Found ${tracks.length} tracks`));
     //Print as json with indentation
-    console.log(JSON.stringify(playlist, null, 2));
+    // console.log(JSON.stringify(playlist, null, 2));
+
+    const listTrackArtists = (track: SpotifyTrack) => track.artists.map(artist => artist.name).join(', ');
+
+    const queries = playlist.tracks.map(track => `${listTrackArtists(track)} - ${track.name}`)
+    for (const query of queries) {
+        console.log(chalk.green(`Searching for ${query}`));
+    }
+
 }
