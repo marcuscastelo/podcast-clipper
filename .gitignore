@@ -110,4 +110,5 @@ videos/
 
 credentials.json
 bin/
+downloads
 *.mp3

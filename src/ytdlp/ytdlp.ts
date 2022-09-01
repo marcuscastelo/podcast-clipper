@@ -19,12 +19,13 @@ export async function init() {
     const ytDlpWrap = new YTDlpWrap(BIN_PATH);
 
     let stdout = await ytDlpWrap.execPromise([
-        'https://www.youtube.com/watch?v=aqz-KE-bpKQ',
+        'https://www.youtube.com/watch?v=LUPP8hrOWf4&list=PLFoebg0g5-CVkwmnm5WQ9OGL0Tz5mZfa3',
+        '--yes-playlist',
         '-x', // extract audio
         '--audio-format', 'mp3',
         '--audio-quality', '0', // best
-        '-o',
-        'output.mp4',
+        '-P', 'downloads',
+        '-o', '%(playlist)s/%(playlist_index)s - %(title)s.%(ext)s',
     ]);
     console.log(stdout);
 }
