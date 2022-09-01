@@ -2,6 +2,7 @@ import { err, errFromMessage, ok, Result } from "../common/result";
 import { SpotifyPlaylist, SpotifyTrack } from '../generic-playlist';
 import chalk from 'chalk';
 import { spotifyApi } from "./spotify-api";
+import { convertTrackToQueries } from "./track-utils";
 
 export function getPlaylistId(playlistUrl: string): Result<string, Error> {
     const playlistId = playlistUrl.split('/').pop()?.split('?')[0];
@@ -104,4 +105,8 @@ export async function getFullPlaylist(playlistId: string) {
         tracks,
         playlist: RAMPlaylist,
     };
+}
+
+export function convertPlaylistToQueries(playlist: SpotifyPlaylist) {
+    return playlist.tracks.map(convertTrackToQueries);
 }

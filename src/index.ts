@@ -1,5 +1,5 @@
 import chalk from 'chalk'
-import { testSpotify } from './spotify-test';
+import { listPlaylistTracksAsQueries } from './spotify-test';
 
 import { program } from 'commander';
 import { authenticateSpotify } from './spotify/spotify-api';
@@ -24,7 +24,9 @@ async function main() {
     
     if (opts.spotify) {
         await authenticateApis();
-        await testSpotify();
+        const queries = await listPlaylistTracksAsQueries('https://open.spotify.com/playlist/3LrJRcZym9u8ogcdBZwP15?si=6fc0812e2b19466a');
+        // TODO: download songs
+        // TODO: downloadFromYoutube(queries);
     } else if (opts.youtube) {
         console.log(chalk.red('Not implemented'));
         throw new Error('Not implemented - Vai la vinão');
